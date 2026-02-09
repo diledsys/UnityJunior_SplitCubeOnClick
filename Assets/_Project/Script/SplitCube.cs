@@ -1,27 +1,37 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
+[RequireComponent(typeof(Collider), typeof(Renderer))]
 public class SplitCube : MonoBehaviour, IClickable
 {
-    [Range(0f, 2f)]
-    [SerializeField] private float splitChance = 2f;
-
+    [Header("Split settings")]
     [SerializeField] private int minChildren = 2;
     [SerializeField] private int maxChildren = 6;
 
-    [Header("Explosion")]
+    [Tooltip("Поколение куба. 0 = стартовый (100%)")]
+    [SerializeField] private int generation = 0;
+
+    [Header("Physics")]
+    [SerializeField] private float spawnJitter = 0.15f;
     [SerializeField] private float explosionForce = 6f;
     [SerializeField] private float explosionRadius = 2f;
     [SerializeField] private float explosionUpwards = 0.4f;
 
-    [SerializeField] private float spawnJitter = 0.12f;
-
     private const float Half = 0.5f;
-    private const float MinMass = 0.5f;
+    private const float MinMass = 0.01f;
+
+    // --- цвет без создания новых материалов ---
+    private static readonly int ColorId = Shader.PropertyToID("_BaseColor");
+    private static MaterialPropertyBlock _mpb;
+
+    private Rigidbody _rb;
 
     private void Awake()
     {
-        GetComponent<Rigidbody>().useGravity = true;
+        _rb = GetComponent<Rigidbody>();
+        if (_rb == null)
+            _rb = gameObject.AddComponent<Rigidbody>();
+
+        _rb.useGravity = true;
     }
 
     public void OnClick()
@@ -31,77 +41,61 @@ public class SplitCube : MonoBehaviour, IClickable
 
     private void TrySplit()
     {
-        if (splitChance < 0.01f)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        // 1. Шанс строго по условию задачи:
+        // 0 → 100%, 1 → 50%, 2 → 25% ...
+        float splitChance = Mathf.Pow(Half, generation);
 
-        bool success = Random.value < splitChance;
-
-        if (!success)
+        if (Random.value > splitChance)
         {
             Destroy(gameObject);
             return;
         }
 
         int count = Random.Range(minChildren, maxChildren + 1);
-        Vector3 parentPos = transform.position;
-        Vector3 childScale = transform.localScale * Half;
 
-        float nextChance = splitChance * Half;
+        Transform t = transform;
+        Vector3 parentPos = t.position;
+        Vector3 childScale = t.localScale * Half;
 
-        Rigidbody parentRb = GetComponent<Rigidbody>();
-        float massFactor = Half * Half * Half;
-
-        Rigidbody[] spawned = new Rigidbody[count];
+        float massFactor = Half * Half * Half; // объём (0.125)
 
         for (int i = 0; i < count; i++)
         {
             GameObject child = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            child.transform.localScale = childScale;
+
+            // transform
             child.transform.position = parentPos + Random.insideUnitSphere * spawnJitter;
+            child.transform.localScale = childScale;
+
+            // слой — чтобы raycast продолжал работать
             child.layer = gameObject.layer;
-            var rb = child.AddComponent<Rigidbody>();
+
+            // физика
+            Rigidbody rb = child.AddComponent<Rigidbody>();
             rb.useGravity = true;
-            rb.mass = Mathf.Max(MinMass, parentRb.mass * massFactor);
+            rb.mass = Mathf.Max(MinMass, _rb.mass * massFactor);
 
-            var split = child.AddComponent<SplitCube>();
-            split.CopySettingsFrom(this, nextChance);
+            // логика деления
+            SplitCube split = child.AddComponent<SplitCube>();
+            split.generation = generation + 1;
+            split.minChildren = minChildren;
+            split.maxChildren = maxChildren;
+            split.spawnJitter = spawnJitter;
+            split.explosionForce = explosionForce;
+            split.explosionRadius = explosionRadius;
+            split.explosionUpwards = explosionUpwards;
 
-            ApplyRandomColor(child);
-
-            spawned[i] = rb;
-        }
-
-        foreach (var rb in spawned)
-        {
-            rb.AddExplosionForce(
-                explosionForce,
-                parentPos,
-                explosionRadius,
-                explosionUpwards,
-                ForceMode.Impulse
-            );
+            // цвет
+            ApplyRandomColor(child.GetComponent<Renderer>());
         }
 
         Destroy(gameObject);
     }
 
-    private void CopySettingsFrom(SplitCube source, float chance)
+    private void ApplyRandomColor(Renderer r)
     {
-        splitChance = chance;
-        minChildren = source.minChildren;
-        maxChildren = source.maxChildren;
-        explosionForce = source.explosionForce;
-        explosionRadius = source.explosionRadius;
-        explosionUpwards = source.explosionUpwards;
-        spawnJitter = source.spawnJitter;
-    }
-
-    private void ApplyRandomColor(GameObject obj)
-    {
-        var renderer = obj.GetComponent<Renderer>();
-        renderer.material.color = Random.ColorHSV(0f, 1f, 0.6f, 1f, 0.6f, 1f);
+        _mpb ??= new MaterialPropertyBlock();
+        _mpb.SetColor(ColorId, Random.ColorHSV(0f, 1f, 0.6f, 1f, 0.6f, 1f));
+        r.SetPropertyBlock(_mpb);
     }
 }
