@@ -41,8 +41,6 @@ public class SplitCube : MonoBehaviour, IClickable
 
     private void TrySplit()
     {
-        // 1. Шанс строго по условию задачи:
-        // 0 → 100%, 1 → 50%, 2 → 25% ...
         float splitChance = Mathf.Pow(Half, generation);
 
         if (Random.value > splitChance)
@@ -57,25 +55,22 @@ public class SplitCube : MonoBehaviour, IClickable
         Vector3 parentPos = t.position;
         Vector3 childScale = t.localScale * Half;
 
-        float massFactor = Half * Half * Half; // объём (0.125)
+        float massFactor = Half * Half * Half; 
 
         for (int i = 0; i < count; i++)
         {
             GameObject child = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            // transform
+
             child.transform.position = parentPos + Random.insideUnitSphere * spawnJitter;
             child.transform.localScale = childScale;
 
-            // слой — чтобы raycast продолжал работать
             child.layer = gameObject.layer;
 
-            // физика
             Rigidbody rb = child.AddComponent<Rigidbody>();
             rb.useGravity = true;
             rb.mass = Mathf.Max(MinMass, _rb.mass * massFactor);
 
-            // логика деления
             SplitCube split = child.AddComponent<SplitCube>();
             split.generation = generation + 1;
             split.minChildren = minChildren;
@@ -85,7 +80,6 @@ public class SplitCube : MonoBehaviour, IClickable
             split.explosionRadius = explosionRadius;
             split.explosionUpwards = explosionUpwards;
 
-            // цвет
             ApplyRandomColor(child.GetComponent<Renderer>());
         }
 
