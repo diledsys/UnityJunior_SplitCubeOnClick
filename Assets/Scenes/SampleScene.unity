@@ -945,10 +945,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 741269321}
   m_SourcePrefab: {fileID: 100100000, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+--- !u!1 &741269320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  m_PrefabInstance: {fileID: 741269319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &741269321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741269320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4739a899c898bf64c8c5331a7fedbc3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeView
+  generation: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,11 +1207,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1142361177}
   m_SourcePrefab: {fileID: 100100000, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
---- !u!1 &1208040833
+--- !u!1 &1142361176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  m_PrefabInstance: {fileID: 1142361175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1142361177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142361176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4739a899c898bf64c8c5331a7fedbc3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeView
+  generation: 0
+--- !u!1 &1519357948
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1197,45 +1241,111 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1208040835}
-  - component: {fileID: 1208040834}
+  - component: {fileID: 1519357954}
+  - component: {fileID: 1519357953}
+  - component: {fileID: 1519357952}
+  - component: {fileID: 1519357951}
+  - component: {fileID: 1519357950}
+  - component: {fileID: 1519357949}
   m_Layer: 0
-  m_Name: InputManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1208040834
+--- !u!114 &1519357949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1208040833}
+  m_GameObject: {fileID: 1519357948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee891cc8409de1a4da7bca396bd28fa0, type: 3}
+  m_Script: {fileID: 11500000, guid: bd0a7f229e4c62e4caee72666deb25f4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MouseClickRaycaster
-  targetCamera: {fileID: 330585545}
-  raycastLayers:
+  m_EditorClassIdentifier: Assembly-CSharp::CubeInteractionController
+  input: {fileID: 1519357953}
+  raycaster: {fileID: 1519357952}
+  spawner: {fileID: 1519357951}
+  exploder: {fileID: 1519357950}
+  minChildren: 2
+  maxChildren: 6
+  childExplosionForce: 6
+  childExplosionRadius: 2
+  childExplosionUpwards: 0.4
+--- !u!114 &1519357950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dba949466d120a43b884101656ce153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExplosionService
+  baseForce: 8
+  baseRadius: 3
+  minAttenuation: 0.15
+--- !u!114 &1519357951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63de679f100da944abcd64903c1a6194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeSpawner
+  cubeLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
+  spawnJitter: 0.15
+--- !u!114 &1519357952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcf728b16e55cc4db0321510af86ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickRaycaster
+  targetCamera: {fileID: 330585545}
+  cubeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   maxDistance: 1000
-  drawDebugRay: 1
-  useLineRenderer: 1
-  lineTime: 0.06
---- !u!4 &1208040835
+--- !u!114 &1519357953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e448ba615156a3a418583f1cfd024c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickInput
+  activationButtonIndex: 0
+--- !u!4 &1519357954
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1208040833}
+  m_GameObject: {fileID: 1519357948}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.80659, y: -0.00001, z: -24.81122}
+  m_LocalPosition: {x: -2.20618, y: 0, z: 33.27106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1315,10 +1425,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1844877891}
   m_SourcePrefab: {fileID: 100100000, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+--- !u!1 &1844877890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  m_PrefabInstance: {fileID: 1844877889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1844877891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844877890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4739a899c898bf64c8c5331a7fedbc3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeView
+  generation: 0
 --- !u!1 &1922029781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,4 +1576,4 @@ SceneRoots:
   - {fileID: 741269319}
   - {fileID: 1142361175}
   - {fileID: 1844877889}
-  - {fileID: 1208040835}
+  - {fileID: 1519357954}
