@@ -879,10 +879,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 88852756826211819, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
       propertyPath: explosionForce
       value: 10
@@ -935,10 +931,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube
       objectReference: {fileID: 0}
-    - target: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6305746511496243052, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
       propertyPath: m_Mass
       value: 20
@@ -956,8 +948,29 @@ PrefabInstance:
     - {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 741269321}
   m_SourcePrefab: {fileID: 100100000, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+--- !u!1 &741269320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  m_PrefabInstance: {fileID: 741269319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &741269321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741269320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512f3a6c936d98a468fe809e5d037a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cube
+  splitChance: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,10 +1193,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6305746511496243052, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
       propertyPath: m_Mass
       value: 20
@@ -1201,8 +1210,29 @@ PrefabInstance:
     - {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1142361177}
   m_SourcePrefab: {fileID: 100100000, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+--- !u!1 &1142361176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  m_PrefabInstance: {fileID: 1142361175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1142361177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142361176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512f3a6c936d98a468fe809e5d037a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cube
+  splitChance: 1
 --- !u!1 &1519357948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,15 +1277,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1519357948}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f004c0a6dd021f4ea22d1fc54c9d09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeSplitHandler
+  input: {fileID: 1519357958}
+  selector: {fileID: 1519357956}
+  spawner: {fileID: 1519357957}
+  minChildren: 2
+  maxChildren: 6
+--- !u!114 &1519357956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 075fb69364afb4c4187453f15dabeb12, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Di.RaycasterSelector
+  m_EditorClassIdentifier: Assembly-CSharp::RaycastSelector
   targetCamera: {fileID: 330585545}
-  targLayerMask:
+  cubeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   maxDistance: 1000
---- !u!114 &1519357956
+--- !u!114 &1519357957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63de679f100da944abcd64903c1a6194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeSpawner
+--- !u!114 &1519357958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1266,42 +1325,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e34c4c4462735d149b7a09721fb8e905, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Di.PointerInput
+  m_EditorClassIdentifier: Assembly-CSharp::PointerInput
   pointerButtonIndex: 0
---- !u!114 &1519357957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519357948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a9a7e4900968e428dbe34c9db948ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Di.CubeSplitterSpawner
-  minChildren: 2
-  maxChildren: 6
-  childScaleFactor: 0.5
-  baseExplosionForce: 8
-  baseExplosionRadius: 3
-  upwardsModifier: 0.25
-  minMass: 0.01
---- !u!114 &1519357958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519357948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82807c0d53235e749b70a9afbf8d59fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Di.CubeClickHandler
-  input: {fileID: 1519357956}
-  selector: {fileID: 1519357955}
-  splitterSpawner: {fileID: 1519357957}
 --- !u!1001 &1844877889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1362,10 +1387,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6305746511496243052, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
       propertyPath: m_Mass
       value: 20
@@ -1383,8 +1404,29 @@ PrefabInstance:
     - {fileID: 2439632233293485786, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1844877891}
   m_SourcePrefab: {fileID: 100100000, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+--- !u!1 &1844877890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6214217076593604495, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  m_PrefabInstance: {fileID: 1844877889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1844877891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844877890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512f3a6c936d98a468fe809e5d037a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cube
+  splitChance: 1
 --- !u!1 &1922029781
 GameObject:
   m_ObjectHideFlags: 0
