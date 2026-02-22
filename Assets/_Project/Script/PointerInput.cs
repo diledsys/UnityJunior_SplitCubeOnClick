@@ -16,6 +16,5 @@ namespace Di
             if (Input.GetMouseButtonDown(pointerButtonIndex))
                 Pressed?.Invoke();
         }
-
     }
 }

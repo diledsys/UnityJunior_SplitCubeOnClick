@@ -18,10 +18,10 @@ namespace Di
         public bool TryGetTarget(out Cube cube)
         {
             Ray ray = targetCamera.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, targLayerMask, QueryTriggerInteraction.Ignore) &&
                 hit.collider.TryGetComponent(out cube))
             {
-                //Debug.Log(hit.transform.localPosition);
                 return true;
             }
 
