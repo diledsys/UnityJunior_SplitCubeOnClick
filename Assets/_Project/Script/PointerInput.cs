@@ -3,18 +3,17 @@ using UnityEngine;
 
 namespace Di
 {
-
     public class PointerInput : MonoBehaviour
     {
-        public event Action Pressed;
+        public event Action<Vector2> Clicked;
 
-        [Header("Mouse Button Index")]
-        [SerializeField] private int pointerButtonIndex = 0;
+        [Header("Mouse Button Index")] [SerializeField]
+        private int _pointerButtonIndex = 0;
 
-        void Update()
+        private void Update()
         {
-            if (Input.GetMouseButtonDown(pointerButtonIndex))
-                Pressed?.Invoke();
+            if (Input.GetMouseButtonDown(_pointerButtonIndex))
+                Clicked?.Invoke(Input.mousePosition);
         }
     }
 }

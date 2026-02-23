@@ -1,42 +1,62 @@
+using System;
 using UnityEngine;
 
-namespace Di
+[RequireComponent(typeof(Collider), typeof(Rigidbody))]
+public sealed class Cube : MonoBehaviour
 {
-    [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-    public class Cube : MonoBehaviour
+    private const float MinSplitChance = 0f;
+    private const float MaxSplitChance = 1f;
+
+    [SerializeField, Range(MinSplitChance, MaxSplitChance)]
+    private float _splitChance = 1f;
+
+    private Rigidbody _rigidbody;
+    private Renderer _renderer;
+
+    public event Action<Cube> Clicked;
+
+    public float SplitChance => _splitChance;
+
+    private void Awake()
     {
-        public float SplitChance { get; private set; } = 1f;
-        public Rigidbody Rigidbody { get; private set; }
+        _rigidbody = GetComponent<Rigidbody>();
+        _renderer = GetComponent<Renderer>();
+    }
 
-        private Renderer _renderer;
+    public void Initialize(
+        float splitChance,
+        Vector3 scale,
+        float mass,
+        Color color,
+        int layer,
+        bool useGravity = true)
+    {
+        _splitChance = Mathf.Clamp(splitChance, MinSplitChance, MaxSplitChance);
 
-        private void Awake()
-        {
-            Rigidbody = GetComponent<Rigidbody>();
-            _renderer = GetComponent<Renderer>();
-        }
+        transform.localScale = scale;
+        gameObject.layer = layer;
 
-        public void Initialize(
-            float splitChance,
-            Vector3 scale,
-            float mass,
-            Color color,
-            int layer,
-            bool useGravity = true)
-        {
-            SplitChance = Mathf.Clamp01(splitChance);
+        ConfigurePhysics(mass, useGravity);
+        ApplyColor(color);
+    }
 
-            transform.localScale = scale;
-            gameObject.layer = layer;
+    public void NotifyClicked()
+    {
+        Clicked?.Invoke(this);
+    }
 
-            if (Rigidbody != null)
-            {
-                Rigidbody.useGravity = useGravity;
-                Rigidbody.mass = mass;
-            }
+    private void ConfigurePhysics(float mass, bool useGravity)
+    {
+        _rigidbody.mass = Mathf.Max(0.0001f, mass);
+        _rigidbody.useGravity = useGravity;
+        _rigidbody.isKinematic = false;
+    }
 
-            if (_renderer != null)
-                _renderer.material.color = color;
-        }
+    private void ApplyColor(Color color)
+    {
+        if (_renderer == null)
+            return;
+
+        _renderer.material.color = color;
     }
 }

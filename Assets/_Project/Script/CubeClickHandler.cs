@@ -1,34 +1,24 @@
 using UnityEngine;
 
-namespace Di
+public sealed class CubeClickHandler : MonoBehaviour
 {
-    public class CubeClickHandler : MonoBehaviour
+    [SerializeField] private RaycastSelector _raycastSelector;
+
+    private void OnEnable()
     {
-        [SerializeField] private PointerInput input;
-        [SerializeField] private RaycasterSelector selector;
-        [SerializeField] private CubeSplitService splitService;
+        _raycastSelector.CubeSelected += OnCubeSelected;
+    }
 
-        private void OnEnable()
-        {
-            if (input != null)
-                input.Pressed += OnPressed;
-        }
+    private void OnDisable()
+    {
+        _raycastSelector.CubeSelected -= OnCubeSelected;
+    }
 
-        private void OnDisable()
-        {
-            if (input != null)
-                input.Pressed -= OnPressed;
-        }
+    private void OnCubeSelected(Cube cube)
+    {
+        if (cube == null)
+            return;
 
-        private void OnPressed()
-        {
-            if (selector == null || splitService == null)
-                return;
-
-            if (!selector.TryGetTarget(out Cube cube))
-                return;
-
-            splitService.SplitOrDisappear(cube);
-        }
+        cube.NotifyClicked();
     }
 }

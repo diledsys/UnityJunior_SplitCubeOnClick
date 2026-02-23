@@ -1,36 +1,27 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Di
+public sealed class ExplosionApplier : MonoBehaviour
 {
-    public class ExplosionApplier : MonoBehaviour
+    [Header("Explosion Settings")] [SerializeField]
+    private float _explosionForce = 6f;
+
+    [SerializeField] private float _explosionRadius = 3f;
+    [SerializeField] private float _upwardsModifier = 0.5f;
+
+    public void Apply(Cube[] cubes, Vector3 origin)
     {
-        private const float MinAllowedSize = 0.001f;
-
-        [Header("Explosion")]
-        [SerializeField] private float baseExplosionForce = 2f;
-        [SerializeField] private float baseExplosionRadius = 3f;
-        [SerializeField] private float upwardsModifier = 0.25f;
-
-        public void Apply(IReadOnlyList<Rigidbody> bodies, Vector3 center, Vector3 referenceScale)
+        for (int i = 0; i < cubes.Length; i++)
         {
-            if (bodies == null || bodies.Count == 0)
-                return;
+            Rigidbody rigidbody = cubes[i].GetComponent<Rigidbody>();
+            if (rigidbody == null)
+                continue;
 
-            float size = ( referenceScale.x + referenceScale.y + referenceScale.z ) / 3f;
-            float safeSize = Mathf.Max(MinAllowedSize, size);
-
-            float force = baseExplosionForce / safeSize;
-            float radius = baseExplosionRadius / safeSize;
-
-            for (int i = 0; i < bodies.Count; i++)
-            {
-                Rigidbody rb = bodies[i];
-                if (rb == null)
-                    continue;
-
-                rb.AddExplosionForce(force, center, radius, upwardsModifier, ForceMode.Impulse);
-            }
+            rigidbody.AddExplosionForce(
+                _explosionForce,
+                origin,
+                _explosionRadius,
+                _upwardsModifier,
+                ForceMode.Impulse);
         }
     }
 }

@@ -1,32 +1,35 @@
-
+using Di;
+using System;
 using UnityEngine;
 
-namespace Di
+public sealed class RaycastSelector : MonoBehaviour
 {
-    public class RaycasterSelector : MonoBehaviour
+    [SerializeField] private PointerInput _pointerInput;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private LayerMask _cubeMask = ~0;
+
+    public event Action<Cube> CubeSelected;
+
+    private void OnEnable()
     {
-        [SerializeField] private Camera targetCamera;
-        [SerializeField] private LayerMask targLayerMask = ~0;
-        [SerializeField] private float maxDistance = 1000f;
+        _pointerInput.Clicked += OnPointerClicked;
+    }
 
-        void Awake()
-        {
-            if (targetCamera == null)
-                targetCamera = Camera.main;
-        }
+    private void OnDisable()
+    {
+        _pointerInput.Clicked -= OnPointerClicked;
+    }
 
-        public bool TryGetTarget(out Cube cube)
-        {
-            Ray ray = targetCamera.ScreenPointToRay(Input.mousePosition);
+    private void OnPointerClicked(Vector2 screenPosition)
+    {
+        Ray ray = _camera.ScreenPointToRay(screenPosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, targLayerMask, QueryTriggerInteraction.Ignore) &&
-                hit.collider.TryGetComponent(out cube))
-            {
-                return true;
-            }
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _cubeMask))
+            return;
 
-            cube = null;
-            return false;
-        }
+        if (!hit.collider.TryGetComponent(out Cube cube))
+            return;
+
+        CubeSelected?.Invoke(cube);
     }
 }

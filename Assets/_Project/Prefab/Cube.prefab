@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 88852756826211819}
   - component: {fileID: 6305746511496243052}
   - component: {fileID: 4126741600861493052}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,3 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512f3a6c936d98a468fe809e5d037a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Di.Cube
+  _splitChance: 1

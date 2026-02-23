@@ -1011,76 +1011,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1519357948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545c6d8a8befeec48959bdf3652068c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ExplosionApplier
-  _explosionForce: 6
-  _explosionRadius: 3
-  _upwardsModifier: 0.5
---- !u!114 &1519357956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519357948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a9120541c87e2449593a8288caa651, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CubeSplitService
-  _minChildren: 2
-  _maxChildren: 6
-  _childScaleFactor: 0.5
-  _splitChanceDecay: 0.5
---- !u!114 &1519357957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519357948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e2c7097d7408c94990c492fee0b6af7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CubeSpawner
-  _cubePrefab: {fileID: 4126741600861493052, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
-  _minChildren: 2
-  _maxChildren: 6
-  _childScaleFactor: 0.5
-  _splitChanceDecay: 0.5
---- !u!114 &1519357958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519357948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82807c0d53235e749b70a9afbf8d59fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CubeClickHandler
-  _raycastSelector: {fileID: 1519357959}
---- !u!114 &1519357959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519357948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 075fb69364afb4c4187453f15dabeb12, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RaycastSelector
-  _pointerInput: {fileID: 1519357960}
-  _camera: {fileID: 330585545}
-  _cubeMask:
+  m_EditorClassIdentifier: Assembly-CSharp::Di.RaycasterSelector
+  targetCamera: {fileID: 330585545}
+  targLayerMask:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &1519357960
+  maxDistance: 1000
+--- !u!114 &1519357956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1092,7 +1031,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34c4c4462735d149b7a09721fb8e905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Di.PointerInput
-  _pointerButtonIndex: 0
+  pointerButtonIndex: 0
+--- !u!114 &1519357957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 545c6d8a8befeec48959bdf3652068c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Di.ExplosionApplier
+  baseExplosionForce: 2
+  baseExplosionRadius: 3
+  upwardsModifier: 0.25
+--- !u!114 &1519357958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2c7097d7408c94990c492fee0b6af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Di.CubeSpawner
+  cubePrefab: {fileID: 4126741600861493052, guid: b62853c9f654d5a428bb3184c501f8fa, type: 3}
+  minChildren: 2
+  maxChildren: 6
+  childScaleFactor: 0.5
+  minMass: 0.01
+--- !u!114 &1519357959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82807c0d53235e749b70a9afbf8d59fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Di.CubeClickHandler
+  input: {fileID: 1519357956}
+  selector: {fileID: 1519357955}
+  splitService: {fileID: 1519357960}
+--- !u!114 &1519357960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519357948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a9120541c87e2449593a8288caa651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Di.CubeSplitService
+  spawner: {fileID: 1519357958}
+  explosion: {fileID: 1519357957}
 --- !u!1001 &1839156801
 PrefabInstance:
   m_ObjectHideFlags: 0

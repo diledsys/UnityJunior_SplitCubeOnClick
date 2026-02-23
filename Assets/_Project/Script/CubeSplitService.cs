@@ -1,36 +1,54 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Di
+public sealed class CubeSplitService : MonoBehaviour
 {
-    public class CubeSplitService : MonoBehaviour
+    private const float MinChance = 0f;
+    private const float MaxChance = 1f;
+
+    [Header("Children Count")] [SerializeField]
+    private int _minChildren = 2;
+
+    [SerializeField] private int _maxChildren = 6;
+
+    [Header("Scaling")] [SerializeField] private float _childScaleFactor = 0.5f;
+
+    [Header("Split Chance")] [SerializeField]
+    private float _splitChanceDecay = 0.5f;
+
+    public SplitResult Calculate(Vector3 parentScale, float parentSplitChance)
     {
-        [SerializeField] private CubeSpawner spawner;
-        [SerializeField] private ExplosionApplier explosion;
+        float clampedChance = Mathf.Clamp(parentSplitChance, MinChance, MaxChance);
 
-        public void SplitOrDisappear(Cube parent)
+        bool shouldSplit = Random.value <= clampedChance;
+
+        if (!shouldSplit)
         {
-            if (parent == null || spawner == null)
-                return;
+            return SplitResult.Fail;
+        }
 
-            if (Random.value > parent.SplitChance)
-            {
-                Destroy(parent.gameObject);
-                return;
-            }
+        int childCount = Random.Range(_minChildren, _maxChildren + 1);
 
-            Vector3 center = parent.transform.position;
-            float childChance = parent.SplitChance * 0.5f;
+        Vector3 childScale = parentScale * _childScaleFactor;
+        float childSplitChance = Mathf.Clamp(clampedChance * _splitChanceDecay, MinChance, MaxChance);
 
-            List<Rigidbody> bodies = spawner.SpawnChildren(parent, center, childChance);
+        return new SplitResult(true, childCount, childScale, childSplitChance);
+    }
 
-            if (explosion != null && bodies.Count > 0)
-            {
-                Vector3 childScale = spawner.GetChildScale(parent.transform.localScale);
-                explosion.Apply(bodies, center, childScale);
-            }
+    public readonly struct SplitResult
+    {
+        public static readonly SplitResult Fail = new SplitResult(false, 0, Vector3.zero, 0f);
 
-            Destroy(parent.gameObject);
+        public readonly bool ShouldSplit;
+        public readonly int ChildCount;
+        public readonly Vector3 ChildScale;
+        public readonly float ChildSplitChance;
+
+        public SplitResult(bool shouldSplit, int childCount, Vector3 childScale, float childSplitChance)
+        {
+            ShouldSplit = shouldSplit;
+            ChildCount = childCount;
+            ChildScale = childScale;
+            ChildSplitChance = childSplitChance;
         }
     }
 }
