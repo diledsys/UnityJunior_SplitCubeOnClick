@@ -45,7 +45,6 @@ public sealed class CubeSpawner : MonoBehaviour
 
     private void OnCubeClicked(Cube parent)
     {
-        Debug.Log("OnCubeClicked");
         if (parent == null)
             return;
 
@@ -58,6 +57,7 @@ public sealed class CubeSpawner : MonoBehaviour
         Destroy(parent.gameObject);
 
         bool shouldSplit = Random.value <= parentChance;
+
         if (!shouldSplit)
             return;
 

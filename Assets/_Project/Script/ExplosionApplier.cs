@@ -13,6 +13,7 @@ public sealed class ExplosionApplier : MonoBehaviour
         for (int i = 0; i < cubes.Length; i++)
         {
             Rigidbody rigidbody = cubes[i].GetComponent<Rigidbody>();
+
             if (rigidbody == null)
                 continue;
 
