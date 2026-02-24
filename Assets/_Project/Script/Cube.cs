@@ -47,7 +47,7 @@ public sealed class Cube : MonoBehaviour
 
     private void ConfigurePhysics(float mass, bool useGravity)
     {
-        _rigidbody.mass = Mathf.Max(0.0001f, mass);
+        _rigidbody.mass = mass;
         _rigidbody.useGravity = useGravity;
         _rigidbody.isKinematic = false;
     }
