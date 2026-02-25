@@ -1,28 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class ExplosionApplier : MonoBehaviour
+public class ExplosionApplier : MonoBehaviour
 {
-    [Header("Explosion Settings")] [SerializeField]
-    private float _explosionForce = 6f;
+    [SerializeField] private float _baseForce = 8f;
+    [SerializeField] private float _baseRadius = 3f;
+    [SerializeField] private float _upwardsModifier = 0.25f;
 
-    [SerializeField] private float _explosionRadius = 3f;
-    [SerializeField] private float _upwardsModifier = 0.5f;
+    private const float MinSize = 0.01f;
 
-    public void Apply(Cube[] cubes, Vector3 origin)
+    public void Explode(Vector3 center, IReadOnlyList<Rigidbody> bodies, Vector3 childScale)
     {
-        for (int i = 0; i < cubes.Length; i++)
-        {
-            Rigidbody rigidbody = cubes[i].GetComponent<Rigidbody>();
+        float size = (childScale.x + childScale.y + childScale.z) / 3f;
+        float safeSize = Mathf.Max(MinSize, size);
 
+        float force = _baseForce / safeSize;
+        float radius = _baseRadius / safeSize;
+
+        for (int i = 0; i < bodies.Count; i++)
+        {
+            var rigidbody = bodies[i];
             if (rigidbody == null)
                 continue;
 
-            rigidbody.AddExplosionForce(
-                _explosionForce,
-                origin,
-                _explosionRadius,
-                _upwardsModifier,
-                ForceMode.Impulse);
+            rigidbody.AddExplosionForce(force, center, radius, _upwardsModifier, ForceMode.Impulse);
         }
     }
 }

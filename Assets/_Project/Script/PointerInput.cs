@@ -1,19 +1,15 @@
 using System;
 using UnityEngine;
 
-namespace Di
+public class PointerInput : MonoBehaviour
 {
-    public class PointerInput : MonoBehaviour
+    [SerializeField] private int _pointerButtonIndex = 0;
+
+    public event Action Pressed;
+
+    private void Update()
     {
-        public event Action<Vector2> Clicked;
-
-        [Header("Mouse Button Index")] [SerializeField]
-        private int _pointerButtonIndex = 0;
-
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(_pointerButtonIndex))
-                Clicked?.Invoke(Input.mousePosition);
-        }
+        if (Input.GetMouseButtonDown(_pointerButtonIndex))
+            Pressed?.Invoke();
     }
 }

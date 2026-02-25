@@ -1,74 +1,54 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class CubeSpawner : MonoBehaviour
+public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] private Cube _cubePrefab;
-
-    [SerializeField] private int _minChildren = 2;
-    [SerializeField] private int _maxChildren = 6;
-
     [SerializeField] private float _childScaleFactor = 0.5f;
-    [SerializeField] private float _splitChanceDecay = 0.5f;
+    [SerializeField] private float _minMass = 0.01f;
 
-    private void Start()
+    public List<Rigidbody> SpawnChildren(Cube parent, int count, float childChance)
     {
-        RegisterExistingCubes();
-    }
+        var bodies = new List<Rigidbody>(count);
 
-    private void RegisterExistingCubes()
-    {
-        Cube[] cubes = FindObjectsOfType<Cube>();
+        Vector3 parentPos = parent.transform.position;
+        Vector3 childScale = parent.transform.localScale * _childScaleFactor;
+        int layer = parent.gameObject.layer;
 
-        for (int i = 0; i < cubes.Length; i++)
+        float parentMass = 1f;
+        if (parent.TryGetComponent(out Rigidbody parentRb))
+            parentMass = parentRb.mass;
+
+        float massFactor = _childScaleFactor * _childScaleFactor * _childScaleFactor;
+        float childMass = Mathf.Max(_minMass, parentMass * massFactor);
+
+        for (int i = 0; i < count; i++)
         {
-            cubes[i].Clicked -= OnCubeClicked;
-            cubes[i].Clicked += OnCubeClicked;
+            GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            gameObject.transform.position = parentPos;
+            gameObject.transform.localScale = childScale;
+            gameObject.layer = layer;
+
+            var rb = gameObject.AddComponent<Rigidbody>();
+            rb.useGravity = true;
+            rb.mass = childMass;
+
+            var renderer = gameObject.GetComponent<Renderer>();
+            renderer.material.color = Random.ColorHSV();
+
+            var cube = gameObject.AddComponent<Cube>();
+            cube.SetSplitChance(childChance);
+
+            bodies.Add(rb);
         }
+
+        return bodies;
     }
 
-    public Cube SpawnCube(Vector3 position, Quaternion rotation, float splitChance, Vector3 scale)
+    public void Remove(Cube cube)
     {
-        Cube cube = Instantiate(_cubePrefab, position, rotation);
-
-        cube.Initialize(
-            splitChance,
-            scale,
-            mass: 1f,
-            color: Random.ColorHSV(),
-            layer: cube.gameObject.layer,
-            useGravity: true);
-
-        cube.Clicked += OnCubeClicked;
-
-        return cube;
+        Destroy(cube.gameObject);
     }
 
-    private void OnCubeClicked(Cube parent)
-    {
-        if (parent == null)
-            return;
-
-        parent.Clicked -= OnCubeClicked;
-
-        Vector3 parentPosition = parent.transform.position;
-        Vector3 parentScale = parent.transform.localScale;
-        float parentChance = parent.SplitChance;
-
-        Destroy(parent.gameObject);
-
-        bool shouldSplit = Random.value <= parentChance;
-
-        if (!shouldSplit)
-            return;
-
-        int childCount = Random.Range(_minChildren, _maxChildren + 1);
-
-        Vector3 childScale = parentScale * _childScaleFactor;
-        float childChance = parentChance * _splitChanceDecay;
-
-        for (int i = 0; i < childCount; i++)
-        {
-            SpawnCube(parentPosition, Random.rotation, childChance, childScale);
-        }
-    }
+    public float ChildScaleFactor => _childScaleFactor;
 }
